@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
 using Server.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace Server
 {
@@ -19,6 +20,7 @@ namespace Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO videti ovo
             services.AddTransient<ITextRepository,TextRepository>();
 
             services.AddDbContext<TextContext>(options =>
@@ -27,8 +29,9 @@ namespace Server
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app,IHostingEnvironment env, TextContext context)
+        public void Configure(IApplicationBuilder app,IHostingEnvironment env, TextContext context,ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddFile(_configuration.GetSection("Logging"));
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
