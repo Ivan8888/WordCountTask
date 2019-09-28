@@ -11,14 +11,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class TextController : ControllerBase
     {
         private ITextRepository _repository;
         private ILogger<TextController> _logger;
 
-        public TextController(ITextRepository repository, ILogger<TextController> logger)
+        public TextController(ITextRepository repository,ILogger<TextController> logger)
         {
             _repository = repository;
             _logger = logger;
@@ -29,7 +29,7 @@ namespace Server.Controllers
         {
             try
             {
-                _logger.LogDebug("Start in get method");
+                _logger.LogDebug("Start in Get method");
                 TextData result = _repository.GetText();
                 if(result == null)
                 {
@@ -37,13 +37,31 @@ namespace Server.Controllers
                     return NotFound();
                 }
 
-                _logger.LogInformation($"Text found: {result.Id}, {result.Text}");
+                _logger.LogInformation($"Text found: [{result.Id}] , [{result.Text}]");
                 return result;
             }
             catch(Exception ex)
             {
                 _logger.LogCritical(ex,"Exception while getting text");
-                return StatusCode(500, "A problem happend while handling your request");
+                return StatusCode(500,"A problem happend while handling your request");
+            }
+        }
+
+        [HttpGet("{text}")]
+        public ActionResult<int> WordCount(string text)
+        {
+            try
+            {
+                _logger.LogDebug("Start in GetWordCount method");
+                char[] delimiters = new char[] { ' ','\r','\n' };
+                int wordNumber = text.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Count();
+                _logger.LogInformation($"Number of word in string [{text}] is [{wordNumber}]");
+                return wordNumber;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogCritical(ex,"Exception while getting count of words in text");
+                return StatusCode(500,"A problem happend while handling your request");
             }
         }
     }

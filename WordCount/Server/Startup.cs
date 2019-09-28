@@ -29,9 +29,14 @@ namespace Server
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app,IHostingEnvironment env, TextContext context,ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, TextContext context, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddFile(_configuration.GetSection("Logging"));
+            //don't log in file in development enviroment
+            if(!env.IsDevelopment())
+            {
+                loggerFactory.AddFile(_configuration.GetSection("Logging"));
+            }
+
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 

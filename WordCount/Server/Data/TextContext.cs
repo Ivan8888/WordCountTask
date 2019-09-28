@@ -27,6 +27,11 @@ namespace Server.Data
                 {
                     Id = 2,
                     Text = "This is second text from database"
+                },
+                new TextData
+                {
+                    Id = 3,
+                    Text = "This is third text from database"
                 }
             );
         }
