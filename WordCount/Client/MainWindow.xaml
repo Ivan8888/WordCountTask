@@ -1,0 +1,44 @@
+﻿<Window x:Class="Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        mc:Ignorable="d"
+        Title="Words Count" Height="400" Width="400">
+    <Border Padding="10">
+        <StackPanel Margin="0,-2,0,2">
+            <StackPanel>
+                <TextBlock Margin="10 10 10 0" HorizontalAlignment="Center" Text="Enter text or import from file or database"/>
+                <TextBox Name="txt_TextToProcess" TextWrapping="Wrap" Height="40" AcceptsReturn="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="10 0 10 20" Padding="2"/>
+            </StackPanel>
+
+            <!--Buttons-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Margin="10 0 0 0" Content="File" Height="30" Name="btnFromFile" Click="GetText" />
+                <Button Grid.Column="2" Margin="0 0 10 0" Content="Database" Height="30" Name="btnFromDatabase" Click="GetText"/>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Name="stack1" Grid.Column="1">
+                    <Button Grid.Column="2" Margin="0 10 0 0" Content="CountWords" Height="30" Name="btnCountWords" Click="BtnCountWords_Click"/>
+                    <TextBlock Margin="0 10 0 0" HorizontalAlignment="Center" Text="Number of words is:"/>
+                    <TextBox Margin="0 0 0 20" Padding="2" IsEnabled="False" Height="30"/>
+                </StackPanel>
+
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>
