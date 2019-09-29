@@ -35,7 +35,7 @@
                 <StackPanel Name="stack1" Grid.Column="1">
                     <Button Grid.Column="2" Margin="0 10 0 0" Content="CountWords" Height="30" Name="btnCountWords" Click="BtnCountWords_Click"/>
                     <TextBlock Margin="0 10 0 0" HorizontalAlignment="Center" Text="Number of words is:"/>
-                    <TextBox Margin="0 0 0 20" Padding="2" IsEnabled="False" Height="30"/>
+                    <TextBox Name="txt_WordsNumber" Margin="0 0 0 20" Padding="2" IsEnabled="False" Height="30"/>
                 </StackPanel>
 
             </Grid>

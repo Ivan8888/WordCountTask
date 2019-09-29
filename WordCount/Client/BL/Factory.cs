@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Net.Http;
+using Client.Models;
 
 namespace Client
 {
@@ -36,7 +38,23 @@ namespace Client
     {
         public string GetText()
         {
-            throw new NotImplementedException();
+            return GetTextData();
+        }
+
+        private string GetTextData()
+        {
+            string result = "";
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:6600");
+            HttpResponseMessage response = client.GetAsync("api/text/get").Result;
+            if(response.IsSuccessStatusCode)
+            {
+                TextData textData = response.Content.ReadAsAsync<TextData>().Result;
+                result = textData.Text;
+            }
+
+            return result;
         }
     }
 

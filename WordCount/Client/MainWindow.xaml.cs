@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.Http;
 
 namespace Client
 {
@@ -33,7 +34,23 @@ namespace Client
 
         private void BtnCountWords_Click(object sender, RoutedEventArgs e)
         {
-
+            txt_WordsNumber.Text = GetWordCount(txt_TextToProcess.Text).ToString();
         }
+
+        private int GetWordCount(string text)
+        {
+            int result = 0;
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:6600");
+            HttpResponseMessage response = client.GetAsync($"api/text/wordcount/{text}").Result;
+            if(response.IsSuccessStatusCode)
+            {
+                result = response.Content.ReadAsAsync<int>().Result;
+            }
+
+            return result;
+        }
+
     }
 }
