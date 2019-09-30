@@ -47,15 +47,15 @@ namespace Server.Controllers
             }
         }
 
-        [HttpGet("{text}")]
-        public ActionResult<int> WordCount(string text)
+        [HttpPost]
+        public ActionResult<int> WordCount(RequestText obj)
         {
             try
             {
                 _logger.LogDebug("Start in GetWordCount method");
                 char[] delimiters = new char[] { ' ','\r','\n' };
-                int wordNumber = text.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Count();
-                _logger.LogInformation($"Number of word in string [{text}] is [{wordNumber}]");
+                int wordNumber = obj.Text.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Count();
+                _logger.LogInformation($"Number of word in string [{obj.Text}] is [{wordNumber}]");
                 return wordNumber;
             }
             catch(Exception ex)

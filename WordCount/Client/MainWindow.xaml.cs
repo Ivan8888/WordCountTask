@@ -43,7 +43,7 @@ namespace Client
 
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:6600");
-            HttpResponseMessage response = client.GetAsync($"api/text/wordcount/{text}").Result;
+            HttpResponseMessage response = client.PostAsJsonAsync("api/text/wordcount", new { Text = text}).Result;
             if(response.IsSuccessStatusCode)
             {
                 result = response.Content.ReadAsAsync<int>().Result;
