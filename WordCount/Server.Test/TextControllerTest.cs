@@ -43,7 +43,7 @@ namespace Server.Test
             ITextRepository repository = new FakeTextRepository();
             Mock<ILogger<TextController>> mockLogger = new Mock<ILogger<TextController>>();
             TextController textController = new TextController(repository, mockLogger.Object);
-            var result = textController.WordCount(test);
+            var result = textController.WordCount(new RequestText { Text = test});
             int wordNumber = result.Value;
             Assert.AreEqual(wordNumber, 5);
         }
